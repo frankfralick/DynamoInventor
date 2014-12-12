@@ -1,0 +1,12 @@
+C:\Projects\Dynamo\Dynamo\src\Libraries\bin\AnyCPU\Debug\InventorServices.dll
+C:\Projects\Dynamo\Dynamo\src\Libraries\bin\AnyCPU\Debug\InventorServices.pdb
+C:\Projects\Dynamo\Dynamo\src\Libraries\bin\AnyCPU\Debug\Inventor_2014\InventorServices.dll
+C:\Projects\Dynamo\Dynamo\src\Libraries\bin\AnyCPU\Debug\Inventor_2014\InventorServices.pdb
+C:\Projects\Dynamo\Dynamo\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.csprojResolveAssemblyReference.cache
+C:\Projects\Dynamo\Dynamo\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.dll
+C:\Projects\Dynamo\Dynamo\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.pdb
+C:\Projects\Dynamo\DynamoInventor\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.csprojResolveAssemblyReference.cache
+C:\Projects\Dynamo\DynamoInventor\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.dll
+C:\Projects\Dynamo\DynamoInventor\src\Libraries\Inventor\InventorServices\obj\Debug\InventorServices.pdb
+C:\Projects\Dynamo\DynamoInventor\src\Libraries\bin\AnyCPU\Debug\InventorServices.dll
+C:\Projects\Dynamo\DynamoInventor\src\Libraries\bin\AnyCPU\Debug\InventorServices.pdb
