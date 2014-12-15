@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Inventor;
 
-using Dynamo.Controls;
 using DynamoInventor.Properties;
 using InventorServices.Persistence;
 
@@ -148,7 +147,8 @@ namespace DynamoInventor
             handlingCode = HandlingCodeEnum.kEventNotHandled;
             if (beforeOrAfter == EventTimingEnum.kBefore)
             {
-                PersistenceManager.ResetOnDocumentDeactivate(); 
+                //I think it is probably not necessary to register these events as the registration will happen on its own in InventorServices.
+                //PersistenceManager.ResetOnDocumentDeactivate(); 
             }       
         }
 
@@ -157,7 +157,7 @@ namespace DynamoInventor
             handlingCode = HandlingCodeEnum.kEventNotHandled;
             if (beforeOrAfter == EventTimingEnum.kAfter)
             {
-                PersistenceManager.ResetOnDocumentActivate(documentObject);
+                //PersistenceManager.ResetOnDocumentActivate(documentObject);
             }         
         }
 

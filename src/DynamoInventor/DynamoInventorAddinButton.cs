@@ -11,20 +11,27 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using Inventor;
 
-using Dynamo;
 using Dynamo.Controls;
-using Dynamo.FSchemeInterop;
-using Dynamo.UpdateManager;
+using Dynamo.Core;
+using Dynamo.Core.Threading;
+using Dynamo.Models;
+using Dynamo.Services;
 using Dynamo.Utilities;
+using Dynamo.ViewModels;
+
+using DynamoUnits;
+
+using DynamoUtilities;
 using InventorServices.Persistence;
+using DynamoInventor.Models;
 
 namespace DynamoInventor
 {
     internal class DynamoInventorAddinButton : Button
     {
-        public static ExecutionEnvironment env;
-        private static DynamoView dynamoView;
-        private DynamoController dynamoController;
+        ////public static ExecutionEnvironment env;
+        ////private static DynamoView dynamoView;
+        ////private DynamoController dynamoController;
         private static bool isRunning = false;
         public static double? dynamoViewX = null;
         public static double? dynamoViewY = null;
@@ -65,44 +72,29 @@ namespace DynamoInventor
                 if (isRunning == false)
                 {
                     //Start Dynamo!  
-                    IntPtr mwHandle = Process.GetCurrentProcess().MainWindowHandle;
+                    //IntPtr mwHandle = Process.GetCurrentProcess().MainWindowHandle;
 
                     string inventorContext = "Inventor " + PersistenceManager.InventorApplication.SoftwareVersion.DisplayVersion;
 
-                    DynamoLogger logger = new DynamoLogger();
-                    dynSettings.DynamoLogger = logger;
-                    var updateManager = new UpdateManager(logger);
+                    AppDomain.CurrentDomain.AssemblyResolve += Analyze.Render.AssemblyHelper.ResolveAssemblies;
+                    //Setup base units.  Need to double check what to do.  The ui default for me is inches, but API always must take cm.
+                    BaseUnit.AreaUnit = AreaUnit.SquareCentimeter;
+                    BaseUnit.LengthUnit = LengthUnit.Centimeter;
+                    BaseUnit.VolumeUnit = VolumeUnit.CubicCentimeter;
 
-                    dynamoController = new DynamoController_Inventor(inventorContext, updateManager);
+                    //Setup DocumentManager...this is all taken care of on its own.  Reference to active application will happen
+                    //when first call to binder.InventorApplication happens
 
-                    dynamoController.DynamoViewModel = new DynamoInventorViewModel(dynamoController, null);
-                    //dynamoController.DynamoViewModel.RequestAuthentication += ((DynamoController_Inventor)dynamoController).RegisterSingleSignOn;
-                    //dynamoController.DynamoViewModel.CurrentSpaceViewModel.CanFindNodesFromElements = true;
-                    //dynamoController.DynamoViewModel.CurrentSpaceViewModel.FindNodesFromElements = ((DynamoController_Inventor)dynamoController).FindNodesFromSelection;
+                    //Create instance of DynamoModel
+                    DynamoModel dynamoModel = DynamoModel.Start();
+                    DynamoViewModel dynamoViewModel = DynamoViewModel.Start();
 
-
-                    dynamoController.VisualizationManager = new VisualizationManager();
-                    dynamoView = new DynamoView() { DataContext = dynamoController.DynamoViewModel };
-                    dynamoController.UIDispatcher = dynamoView.Dispatcher;
-
+                    IntPtr mwHandle = Process.GetCurrentProcess().MainWindowHandle;
+                    var dynamoView = new DynamoView(dynamoViewModel);
                     new WindowInteropHelper(dynamoView).Owner = mwHandle;
 
                     handledCrash = false;
-
-                    dynamoView.WindowStartupLocation = WindowStartupLocation.Manual;
-
-                    Rectangle bounds = Screen.PrimaryScreen.Bounds;
-                    dynamoView.Left = dynamoViewX ?? bounds.X;
-                    dynamoView.Top = dynamoViewY ?? bounds.Y;
-                    dynamoView.Width = dynamoViewWidth ?? 1000.0;
-                    dynamoView.Height = dynamoViewHeight ?? 800.0;
-
                     dynamoView.Show();
-
-                    //dynamoView.Dispatcher.UnhandledException -= DispatcherOnUnhandledException;
-                    //dynamoView.Dispatcher.UnhandledException += DispatcherOnUnhandledException;
-                    //dynamoView.Closing += dynamoView_Closing;
-                    dynamoView.Closed += dynamoView_Closed;
                     isRunning = true;
                 }
 
@@ -128,10 +120,10 @@ namespace DynamoInventor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dynamoView_Closed(object sender, EventArgs e)
-        {
-            dynamoView = null;
-            isRunning = false;
-        }
+        //private void dynamoView_Closed(object sender, EventArgs e)
+        //{
+        //    dynamoView = null;
+        //    isRunning = false;
+        //}
 	}
 }

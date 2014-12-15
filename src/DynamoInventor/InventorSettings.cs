@@ -13,15 +13,15 @@ namespace DynamoInventor
     /// This class holds static references that the application needs.  
     /// </summary>
     /// 
-    //TODO: This should probably not be public, but would need to be marked as friend to DSInventorNodes.
+    //TODO: This should probably be deleted entirely.  None of this seems valid anymore.
     public class InventorSettings
     {
         //public static Inventor.Application InventorApplication { get; set; }
 
         //public static AssemblyDocument ActiveAssemblyDoc { get; set; }
 
-        public static Stack<ComponentOccurrencesContainer> ComponentOccurrencesContainers
-            = new Stack<ComponentOccurrencesContainer>(new[] { new ComponentOccurrencesContainer() });
+        //public static Stack<ComponentOccurrencesContainer> ComponentOccurrencesContainers
+            //= new Stack<ComponentOccurrencesContainer>(new[] { new ComponentOccurrencesContainer() });
 
         //public static ReferenceKeyManager KeyManager { get; set; }
         
