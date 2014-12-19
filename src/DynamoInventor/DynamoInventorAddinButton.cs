@@ -24,14 +24,12 @@ using DynamoUnits;
 using DynamoUtilities;
 using InventorServices.Persistence;
 using DynamoInventor.Models;
+using DynamoInventor;
 
 namespace DynamoInventor
 {
     internal class DynamoInventorAddinButton : Button
     {
-        ////public static ExecutionEnvironment env;
-        ////private static DynamoView dynamoView;
-        ////private DynamoController dynamoController;
         private static bool isRunning = false;
         public static double? dynamoViewX = null;
         public static double? dynamoViewY = null;
@@ -67,16 +65,12 @@ namespace DynamoInventor
 		{
 			try
 			{
-                //TODO Refactor Dynamo initialization steps out. 
-
                 if (isRunning == false)
                 {
                     //Start Dynamo!  
-                    //IntPtr mwHandle = Process.GetCurrentProcess().MainWindowHandle;
-
+                    DynamoInventor.SetupDynamoPaths();
                     string inventorContext = "Inventor " + PersistenceManager.InventorApplication.SoftwareVersion.DisplayVersion;
 
-                    AppDomain.CurrentDomain.AssemblyResolve += Analyze.Render.AssemblyHelper.ResolveAssemblies;
                     //Setup base units.  Need to double check what to do.  The ui default for me is inches, but API always must take cm.
                     BaseUnit.AreaUnit = AreaUnit.SquareCentimeter;
                     BaseUnit.LengthUnit = LengthUnit.Centimeter;
@@ -85,9 +79,14 @@ namespace DynamoInventor
                     //Setup DocumentManager...this is all taken care of on its own.  Reference to active application will happen
                     //when first call to binder.InventorApplication happens
 
-                    //Create instance of DynamoModel
-                    DynamoModel dynamoModel = DynamoModel.Start();
-                    DynamoViewModel dynamoViewModel = DynamoViewModel.Start();
+                    InventorDynamoModel inventorDynamoModel = InventorDynamoModel.Start();
+
+                    DynamoViewModel dynamoViewModel = DynamoViewModel.Start(
+                    new DynamoViewModel.StartConfiguration()
+                    {
+                        DynamoModel = inventorDynamoModel
+                    });
+
 
                     IntPtr mwHandle = Process.GetCurrentProcess().MainWindowHandle;
                     var dynamoView = new DynamoView(dynamoViewModel);
@@ -114,16 +113,5 @@ namespace DynamoInventor
                 System.Windows.Forms.MessageBox.Show(e.ToString());
 			}
 		}
-
-        /// <summary>
-        /// Executes after Dynamo closes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void dynamoView_Closed(object sender, EventArgs e)
-        //{
-        //    dynamoView = null;
-        //    isRunning = false;
-        //}
 	}
 }
