@@ -1,11 +1,15 @@
 using Microsoft.Win32;
 using System;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Inventor;
 
 using DynamoInventor.Properties;
+using DynamoUtilities;
+using Dynamo.Utilities;
 using InventorServices.Persistence;
 
 
@@ -46,15 +50,20 @@ namespace DynamoInventor
         #region Public constructors
         public DynamoInventor()
         {
+            //Assembly.LoadFrom(@"C:\Projects\Dynamo\Dynamo\bin\AnyCPU\Debug\DynamoCore.dll");
+            // Even though this method has no dependencies on DynamoCore, resolution of DynamoCore is 
+            // failing prior to the handler to AssemblyResolve event getting registered.  
+            SubscribeAssemblyResolvingEvent();
         }
         #endregion
 
         #region ApplicationAddInServer Members
 
         public void Activate(Inventor.ApplicationAddInSite addInSiteObject, bool firstTime)
-        {
+        {        
             try
             {
+                SetupDynamoPaths();
                 inventorApplication = addInSiteObject.Application;
                 PersistenceManager.InventorApplication = inventorApplication;
                 userInterfaceManager = inventorApplication.UserInterfaceManager;
@@ -260,5 +269,36 @@ namespace DynamoInventor
         {
         }
         #endregion
+
+        public static void SetupDynamoPaths()
+        {
+
+            string assDir = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            // Add the Inventor_20xx folder for assembly resolution
+            DynamoPathManager.Instance.AddResolutionPath(assDir);
+
+            // Setup the core paths
+            // TODO currently DynamoInventor's output path is set to the same one as DynamoCore.
+            // When DynamoInventor is in the Inventor_20xx folder, the application is somehow 
+            // trying to resolve the Dynamo dependencies prior to registering a handler to the 
+            // AssemblyResolve event, so for now DynamoInventor is in Dynamo's debug path and the other
+            // dlls for this project are in the Inventor_20xx folder below.
+            // This doesn't hurt anything for now, but once 2016 comes out it will be a problem.
+            //DynamoPathManager.Instance.InitializeCore(System.IO.Path.GetFullPath(assDir + @"\.."));
+            DynamoPathManager.Instance.InitializeCore("C:\\Projects\\Dynamo\\Dynamo\\bin\\AnyCPU\\Debug");
+            
+
+            // Add Revit-specific paths for loading.
+            DynamoPathManager.Instance.AddPreloadLibrary(System.IO.Path.Combine(assDir, "Inventor_2015\\InventorLibrary.dll"));
+
+            // TODO: Fix this for versioning
+            DynamoPathManager.Instance.SetLibGPath("219");
+        }
+
+        private void SubscribeAssemblyResolvingEvent()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyHelper.ResolveAssembly;
+        }
     }
 }
