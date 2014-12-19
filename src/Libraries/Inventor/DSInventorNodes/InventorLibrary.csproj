@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(SolutionDir)Config/CS.props" />
+  </ImportGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\bin\AnyCPU\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\Inventor_2015\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,19 +40,24 @@
       <HintPath>$(INVENTORAPI)\Autodesk.Inventor.interop.dll</HintPath>
     </Reference>
     <Reference Include="DSNodeServices">
-      <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\DSNodeServices.dll</HintPath>
+      <HintPath>$(DYNAMOAPI)\DSNodeServices.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DynamoCore">
       <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\DynamoCore.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DynamoUtilities">
-      <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\DynamoUtilities.dll</HintPath>
+      <HintPath>$(DYNAMOAPI)\DynamoUtilities.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ProtoGeometry">
-      <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\ProtoGeometry.dll</HintPath>
+      <HintPath>$(DYNAMOAPI)\ProtoGeometry.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ProtoInterface">
-      <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\ProtoInterface.dll</HintPath>
+      <HintPath>$(DYNAMOAPI)\ProtoInterface.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -160,6 +168,7 @@
     <ProjectReference Include="..\InventorServices\InventorServices.csproj">
       <Project>{8b38bbc0-9277-458f-8bb3-ee7b2e0e2b3f}</Project>
       <Name>InventorServices %28Libraries\Inventor\InventorServices\InventorServices%29</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
