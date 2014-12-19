@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(SolutionDir)Config/CS.props" />
+  </ImportGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\AnyCPU\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\Inventor_2015\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,7 +40,8 @@
       <HintPath>$(INVENTORAPI)\Autodesk.Inventor.interop.dll</HintPath>
     </Reference>
     <Reference Include="DSNodeServices">
-      <HintPath>..\..\..\..\..\Dynamo\bin\AnyCPU\Debug\DSNodeServices.dll</HintPath>
+      <HintPath>$(DYNAMOAPI)\DSNodeServices.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SimpleInjector">
       <HintPath>..\..\..\packages\SimpleInjector.2.5.0\lib\net40-client\SimpleInjector.dll</HintPath>
