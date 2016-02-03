@@ -23,7 +23,7 @@ namespace InventorServices.Persistence
         //addin and as an imported library, it mike make most sense to add a "IUIManager" interface,
         //add it to the container, but set its lifestyle set to singleton.  It might then also make sense
         //for nodes to have to implement some interface that adds a property to hold this instance
-        private static ApprenticeServerComponentClass apprenticeServer;
+        private static ApprenticeServerComponent apprenticeServer;
         private static Inventor.Application invApp;
         private static Container container;
         private static AssemblyDocument assDoc;
@@ -98,7 +98,7 @@ namespace InventorServices.Persistence
             {
                 if (apprenticeServer == null)
                 {
-                    apprenticeServer = new ApprenticeServerComponentClass();
+                    apprenticeServer = new ApprenticeServerComponent();
                 }
                 return apprenticeServer;
             }

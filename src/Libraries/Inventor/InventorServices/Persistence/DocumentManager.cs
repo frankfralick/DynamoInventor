@@ -9,8 +9,9 @@ namespace InventorServices.Persistence
 {
     public class DocumentManager : IDocumentManager
     {
-        private Inventor.ApplicationEvents appEvents; 
-        private ApprenticeServerComponentClass apprenticeServer;
+        private Inventor.ApplicationEvents appEvents;
+        //private ApprenticeServerComponentClass apprenticeServer;
+        private ApprenticeServerComponent apprenticeServer;
         private Inventor.Application invApp;
         private AssemblyDocument assDoc;
         private PartDocument partDoc;
@@ -91,7 +92,7 @@ namespace InventorServices.Persistence
             {
                 if (apprenticeServer == null)
                 {
-                    apprenticeServer = new ApprenticeServerComponentClass();
+                    apprenticeServer = new ApprenticeServerComponent();
                 }
                 return apprenticeServer;
             }
