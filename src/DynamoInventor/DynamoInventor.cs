@@ -53,6 +53,7 @@ namespace DynamoInventor
             //Assembly.LoadFrom(@"C:\Projects\Dynamo\Dynamo\bin\AnyCPU\Debug\DynamoCore.dll");
             // Even though this method has no dependencies on DynamoCore, resolution of DynamoCore is 
             // failing prior to the handler to AssemblyResolve event getting registered.  
+            SetupDynamoPaths();
             SubscribeAssemblyResolvingEvent();
         }
         #endregion
@@ -285,12 +286,13 @@ namespace DynamoInventor
             // AssemblyResolve event, so for now DynamoInventor is in Dynamo's debug path and the other
             // dlls for this project are in the Inventor_20xx folder below.
             // This doesn't hurt anything for now, but once 2016 comes out it will be a problem.
-            //DynamoPathManager.Instance.InitializeCore(System.IO.Path.GetFullPath(assDir + @"\.."));
-            DynamoPathManager.Instance.InitializeCore("C:\\Projects\\Dynamo\\Dynamo\\bin\\AnyCPU\\Debug");
+            DynamoPathManager.Instance.InitializeCore(System.IO.Path.GetFullPath(assDir + @"\.."));
+            ////DynamoPathManager.Instance.InitializeCore("C:\\Projects\\Dynamo\\Dynamo\\bin\\AnyCPU\\Debug");
             
 
             // Add Revit-specific paths for loading.
-            DynamoPathManager.Instance.AddPreloadLibrary(System.IO.Path.Combine(assDir, "Inventor_2015\\InventorLibrary.dll"));
+            //DynamoPathManager.Instance.AddPreloadLibrary(System.IO.Path.Combine(assDir, "Inventor_2015\\InventorLibrary.dll"));
+            DynamoPathManager.Instance.AddPreloadLibrary(System.IO.Path.Combine(assDir, "InventorLibrary.dll"));
 
             // TODO: Fix this for versioning
             DynamoPathManager.Instance.SetLibGPath("219");
