@@ -8,7 +8,6 @@ using Inventor;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
-using DSNodeServices;
 using Dynamo.Models;
 using Dynamo.Utilities;
 using InventorLibrary.GeometryConversion;
