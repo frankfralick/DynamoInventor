@@ -59,7 +59,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ProtoInterface">
-      <HintPath>$(DYNAMOAPI)\ProtoInterface.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Dynamo 0.9\ProtoInterface.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=2.5.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
