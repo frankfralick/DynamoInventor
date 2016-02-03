@@ -55,7 +55,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ProtoGeometry">
-      <HintPath>$(DYNAMOAPI)\ProtoGeometry.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Dynamo 0.9\ProtoGeometry.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ProtoInterface">
